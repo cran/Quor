@@ -1,0 +1,17 @@
+citHeader("To cite Quor in publications please use the arxiv version or any future publication of it:")
+
+citEntry(entry = "Article",
+  title        = "Confidence Statements for Ordering Quantiles",
+  author       = personList(person("Carlos", "Pereira"),
+                   as.person("Carlos A. de B. Pereira"),
+		   as.person("Cassio P. de Campos"),
+		   as.person("Paola M. V. Rancoita"),
+                   as.person("Adriano Polpo")),
+  journal      = "arXiv.org",
+  year         = "2014",
+  url          = "http://arxiv.org/abs/1212.5405",
+  textVersion  =
+  paste("C. A. de B. Pereira and C. P. de Campos and P. M. V. Rancoita and A. Polpo (2014).",
+        "\"Confidence Statements for Ordering Quantiles\"",
+        "URL http://arxiv.org/abs/1212.5405.")
+)

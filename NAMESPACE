@@ -1,0 +1,4 @@
+importFrom(combinat,permn)
+useDynLib(Quor, quorccore)
+export(conf.statement, print.conf.statement)
+S3method(print, conf.statement)

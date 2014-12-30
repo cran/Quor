@@ -1,0 +1,154 @@
+% File Quor/man/conf.statement.Rd
+% Part of the Quor package for R (http://www.R-project.org)
+% Copyright (C) 2014, Adriano Polpo, Carlos A. de B. Pereira, Cassio P. de Campos.
+% Distributed under FDL 1.3 or later
+% http://www.gnu.org/licenses/fdl-1.3.html
+
+\documentclass[nogin,letterpaper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption,subfig}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{natbib}
+
+%Package
+\usepackage{amsfonts,amssymb}
+\usepackage{theorem}
+
+%New symbols
+\def\Iset{{\mathbb I}}
+\newcommand{\comb}[2]{\displaystyle \left(\hspace*{-0.18cm}\begin{array}{c} {#1}\\{#2} \end{array}\hspace*{-0.18cm} \right)}
+\newcommand{\combs}[2]{\textnormal{{\tiny$\left(\hspace*{-0.18cm}\begin{array}{c} {#1}\\{#2} \end{array}\hspace*{-0.18cm} \right)$}}}
+
+%Theorem
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Definition}{Definition}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Property}{Property}
+{\theorembodyfont{\rmfamily} \newtheorem{Example}{Example}}
+
+% \VignetteIndexEntry{Quor}
+
+%opening
+\title{Quor}
+
+\author{Adriano Polpo\footnote{Federal University of S\~{a}o Carlos; email: polpo@ufscar.br} \and Carlos A. de B. Pereira\footnote{University of S\~{a}o Paulo; email: cpereira@ime.usp.br}
+\and Cassio P. de Campos\footnote{Queen's University Belfast; email: cassiopc@acm.org}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  This text provides a minimalistic usage guide for the
+  \verb=Quor= package, driven by an example on how to
+  use its main function.
+\end{abstract}
+
+%\begin{keywords}
+{\it Keywords:} Quor, R package, quantile estimation, order statistics.
+%\end{keywords}
+
+\section{Introduction}
+\label{intro}
+
+This document presents the \verb=Quor= package for \verb=R=
+\citep{Rprog}, for more details see \cite{Pereira2014}. It is an open
+source software under
+\href{http://www.gnu.org/licenses/gpl-3.0.html}{GPLv3}. We illustrate
+trough examples how to use the main function in the package.
+
+The package aims at performing a statistical analysis based on the
+confidence statement for the ordering of populations' quantiles.
+We considered non-parametric methods based on the order statistics
+using exact distributions, without the need of any asymptotic
+result. Numerical issues might happen when the number of samples is
+high (many hundreds), but it should nevertheless provide reasonable results.
+
+\section{Installing the package}
+\label{sec_pack}
+
+In case you have not yet done so, the first thing to do before using
+the functions is to install and to load the library. The package can be
+obtained from
+\href{http://code.google.com/p/quor/}{http://code.google.com/p/quor/}.
+
+To install the package from the source file we use
+<<quorinst,eval=FALSE>>=
+install.packages("Quor_VERSION.tar.gz",
+                 repos=NULL,type="source")
+@ 
+For more details on installing \verb=R= or \verb=R= packages please
+see \citet{Rinstall}. After the package has been installed, one should
+``load'' it by using the command
+<<<quor,eval=TRUE>>=
+library("Quor")
+@
+
+\section{Confidence statement}
+\label{sec_cs}
+
+Consider that $X_j = \{X_{j1}, \ldots, X_{jn_j}\}$, $j= 1, \ldots, g$,
+are independent identically distributed continuous random variables,
+and $X_1, \ldots, X_g$ is an arrangement of size $g$, that is, we have
+a sample for each one of the $g$ different groups with size $n_j$. We
+are interested in evaluating the confidence level of the statement
+$Q_1 < Q_2 < \cdots < Q_g$, where $Q_i$ represents a given quantile
+for the population $i$ (they do not need to be the same). The function
+\verb=conf.statement= gets groups from the $g$ populations, one or
+more orderings to be evaluated, and the quantiles of interest for each
+population. The method is able to deal efficiently with many variables
+at the same time (as long as groups have the same length across
+different variables, but obviously not necessarily across groups).
+
+\begin{Example}
+\label{ex1}
+Pre-operative Gleason score provides valuable prognosis in cases of
+prostate cancer. However, for patients in the scale Gleason 7, it does
+not work as well. This might be because Gleason 7 tumors display great
+morphological heterogeneity among regions. The data set has microarray
+data of gene {\it RPS28} for both recurrent (R) and non-recurrent (NR)
+Gleason 7 prostate cancer patients. The following commands evaluate
+the confidence statement for the population median $M_1$ of the
+recurrent patients against the population median $M_2$ of the
+non-recurrent patients. By default, both $M_1<M_2$ and $M_2<M_1$
+statements are evaluated.
+<<example2>>=
+data(gleason7)
+d <- list(x1 = gleason7[1:5,1], x2 = gleason7[,2])
+conf.statement(d,verbose=FALSE)
+@
+\end{Example}
+
+\section{Remarks}
+
+This simple document shows basic use of the \verb=Quor= package.
+We invite the user to the help pages (available with the package) for
+more details about the parameters and to the technical paper which
+explains the method in detail.
+
+\bibliographystyle{apalike}
+
+\begin{thebibliography}{}
+\bibitem[{R Core Team}, 2012a]{Rprog}
+{R Core Team} (2012a).
+\newblock {\em {R}: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+\newblock ISBN: 3-900051-07-0.
+
+\bibitem[{R Core Team}, 2012b]{Rinstall}
+{R Core Team} (2012b).
+\newblock {\em {R} Installation and Administration}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+\newblock ISBN 3-900051-09-7.
+
+\bibitem[Pereira et al., 2014]{Pereira2014}
+Pereira, C. A. de B., de Campos, C. P. and Polpo, A. (2014).
+\newblock {Confidence Statements for Ordering Quantiles}.
+\newblock arXiv.org.
+\newblock http://arxiv.org/abs/1212.5405.
+\end{thebibliography}
+\end{document}
